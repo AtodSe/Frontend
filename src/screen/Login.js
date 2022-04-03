@@ -1,10 +1,19 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
-
+import SubmitButton from "../component/SubmitButton";
 
 const Login = () => {
 
     const [pressed,setPressed] = useState(false);
+    const [alert,setAlert] = useState("");
+    const [number,setNumber] = useState("");
+    const check = () => {
+      if (number.length<9){
+          setAlert("شماره وارد شده صحیح نمیباشد")
+      }else {
+          setAlert("")
+      }
+    }
   return(
       <View style={styles.container}>
           <KeyboardAvoidingView style={styles.avoidContainer}>
@@ -21,25 +30,16 @@ const Login = () => {
                         maxLength={10}
                         style={styles.input}
                         placeholder={'9 1 2 3 4 5 6 7 8'}
+                        value={number}
+                        onChange={(text)=>{setNumber(text)}}
                     />
                 </View>
               </View>
               <View style={styles.alertTextBox}>
-                  <Text style={styles.alertText}>شماره وارد شده صحیح نیست</Text>
+                  <Text style={styles.alertText}>{alert}</Text>
               </View>
               <View style={styles.buttonBox}>
-                  <TouchableWithoutFeedback
-                    onPressIn={()=>{
-                        setPressed(true)
-                    }}
-                    onPressOut={()=>{
-                        setPressed(false)
-                    }}
-                  >
-                      <View style={pressed?styles.buttonPressed:styles.button}>
-                        <Text style={styles.buttonText}>تایید</Text>
-                      </View>
-                  </TouchableWithoutFeedback>
+                 <SubmitButton label={"تایید"} onPressIn={()=>check()}/>
               </View>
           </KeyboardAvoidingView>
       </View>
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#8A7F9D',
         fontFamily:'Shabnam',
+        lineHeight:26
     },
     numberInputBox:{
         flexDirection:"row",
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
         paddingVertical: 2,
         textAlign:"center",
         fontSize:16,
-        fontFamily:'Shabnam'
+        fontFamily:'Shabnam',
+        letterSpacing: 3
     },
     inputBox:{
         borderBottomColor:'#5724AB',
