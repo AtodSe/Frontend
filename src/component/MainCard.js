@@ -1,5 +1,7 @@
 import React from "react";
 import {View, StyleSheet, Text, Dimensions} from "react-native";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
 
 const MainCard = (props) => {
   return(
@@ -10,7 +12,9 @@ const MainCard = (props) => {
           <View style={styles.mainCardsDown}>
               <View style={styles.depositBox}>
                 <View style={styles.circle}>
-
+                    <FontAwesomeIcon
+                        style={{color:'#16B555'}}
+                        icon={faArrowUp}/>
                 </View>
                   <Text style={styles.depositText}>
                       2,576,000
@@ -18,7 +22,10 @@ const MainCard = (props) => {
               </View>
               <View style={styles.depositBox}>
                   <View style={styles.circle}>
-
+                      <FontAwesomeIcon
+                          style={{color:'#EC4141'}}
+                          icon={faArrowDown}
+                      />
                   </View>
                   <Text style={styles.depositText}>
                       1,342,500

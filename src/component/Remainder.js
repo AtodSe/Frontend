@@ -1,34 +1,42 @@
 import React from "react";
 import {View, StyleSheet, Dimensions, Text} from "react-native";
 import ProgressCircle from  'react-native-progress-circle';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
+import {faHospital} from '@fortawesome/free-regular-svg-icons/faHospital'
 
 const Remainder = (props) => {
+
   return(
-      <View style={[styles.container, {backgroundColor:props.backgroundColor}]}>
+      <View style={[styles.container, props.mainStyle]}>
         <View style={styles.iconBox}>
-            <View style={styles.circle}>
+            <View style={[styles.circle,props.circleStyle]}>
+
+                <FontAwesomeIcon
+                    size={25}
+                    icon={ faHospital } />
 
             </View>
         </View>
           <View style={styles.textBox}>
             <Text style={styles.titer}>
-                سفر بوشهر
+                {props.title}
             </Text>
               <Text style={styles.date}>
-                  تا فردا
+                  {props.date}
             </Text>
           </View>
           <View style={styles.progressBox}>
               <ProgressCircle
-                  percent={30}
+                  percent={props.percent}
                   radius={30}
                   borderWidth={3}
                   color="#5724AB"
                   shadowColor="#E9DBFF"
-                  bgColor={props.backgroundColor}
+                  bgColor={'#FAF8F0'}
 
               >
-                  <Text style={{ fontSize: 16 }}>{'30%'}</Text>
+                  <Text style={styles.percentText}>{`${props.percent}%`}</Text>
               </ProgressCircle>
           </View>
       </View>
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
         justifyContent:"space-around",
         alignItems:"center",
         flexDirection:"row-reverse",
-        backgroundColor:'#A6D4FF',
+        backgroundColor:'#FAF8F0',
         width:340,
         height:70,
         borderRadius:20,
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').width * 0.14,
         backgroundColor:'#FAF8F0',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textBox:{
         flex:3
@@ -79,6 +87,10 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         marginHorizontal:8
+    },
+    percentText:{
+        fontSize:18,
+        color:'#302B38',
     }
 });
 export default Remainder;

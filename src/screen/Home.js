@@ -6,7 +6,9 @@ import Remainder from "../component/Remainder";
 
 const Home = (props) => {
   return(
-      <View style={styles.container}>
+      <View contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
             <View style={styles.circles}>
 
@@ -34,30 +36,89 @@ const Home = (props) => {
                     ریمایندر ها
                 </Text>
             </View>
-            <View style={{height:'57%'}}>
-              <ScrollView
-                  showsVerticalScrollIndicator={false}
-              >
+              <View style={{height:'64%' , paddingBottom:30}}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+            >
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#84C4FF'
+                    }}
 
-                <Remainder backgroundColor={'#FFAA46'}/>
-                <Remainder backgroundColor={'#64C7FF'}/>
-                  <Remainder backgroundColor={'#FFAA46'}/>
-                <Remainder backgroundColor={'#64C7FF'}/>
-                <Remainder backgroundColor={'#64C7FF'}/>
-                <Remainder backgroundColor={'#64C7FF'}/>
-                <Remainder backgroundColor={'#64C7FF'}/>
-                  <Remainder backgroundColor={'#FFAA46'}/>
-              </ScrollView>
-            </View>
+                />
+                <Remainder
+                    title={'خرید عید'}
+                    date={'تا 1/1/1401'}
+                    percent={75}
+                    circleStyle={{
+                        backgroundColor:'#F3BB2C'
+                    }}
+
+                />
+                <Remainder
+                    title={'کتاب'}
+                    date={'تا 1/1/1401'}
+                    percent={21}
+                    circleStyle={{
+                        backgroundColor:'#FE54B0'
+                    }}
+
+                />
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#84C4FF'
+                    }}
+                />
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#84C4FF'
+                    }}
+                />
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#84C4FF'
+                    }}
+                />
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#84C4FF'
+                    }}
+                />
+                <Remainder
+                    title={'سفر بوشهر'}
+                    date={'تا فردا'}
+                    percent={60}
+                    circleStyle={{
+                        backgroundColor:'#F3BB2C'
+                    }}
+                />
+            </ScrollView>
+              </View>
           </View>
       </View>
   );
 }
 const styles= StyleSheet.create({
     container : {
-        marginVertical:40,
+
         display:"flex",
         flex:1,
+        paddingBottom : 22,
         backgroundColor: '#FAF8F0',
         justifyContent:"flex-start",
 
@@ -66,6 +127,7 @@ const styles= StyleSheet.create({
         flexDirection:"row-reverse",
         justifyContent: "flex-start",
         alignItems:"center",
+        marginTop:25,
         marginHorizontal:30
     },
     circles:{
@@ -80,7 +142,7 @@ const styles= StyleSheet.create({
         textAlign:"center",
         fontSize:18,
         color:'#8A7F9D',
-        fontFamily:'Shabnam',
+        fontFamily:'ShabnamBold',
         lineHeight:26
     },
     headerTextBox:{
@@ -101,9 +163,9 @@ const styles= StyleSheet.create({
     },
     mainTiter:{
         textAlign:"right",
-        fontSize:22,
+        fontSize:20,
         color:'#302B38',
-        fontFamily:'Shabnam',
+        fontFamily:'ShabnamBold',
     }
 
 });

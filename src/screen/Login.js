@@ -29,7 +29,7 @@ const Login = () => {
                         keyboardType={'number-pad'}
                         maxLength={10}
                         style={styles.input}
-                        placeholder={'9 1 2 3 4 5 6 7 8'}
+                        placeholder={'912345678'}
                         value={number}
                         onChange={(text)=>{setNumber(text)}}
                     />
