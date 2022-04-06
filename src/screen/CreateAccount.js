@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
     View,
     StyleSheet,
@@ -6,13 +6,16 @@ import {
     Text,
     TouchableHighlight,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity, Modal
 } from "react-native";
 import CircleColorPicker from "../component/CircleColorPicker";
 import InputBox from "../component/InputBox";
 import SubmitButton from "../component/SubmitButton";
 
+
 const CreateAccount = () => {
+    const [total,setTotal] = useState("")
+
   return(
       <View style={styles.container}>
         <KeyboardAvoidingView style={styles.avoidContainer}>
@@ -27,8 +30,11 @@ const CreateAccount = () => {
                 </View>
             </View>
             <View style={styles.main}>
+
                 <InputBox placeholder={'نام حساب'}/>
-                <InputBox placeholder={'مبلغ موجودی'} keyboardType={'number-pad'} />
+                <InputBox placeholder={'مبلغ موجودی'} keyboardType={'number-pad'}
+                    value={total} onChangeText={(text)=> setTotal(text)}
+                />
 
             </View>
             <View style={styles.footer}>

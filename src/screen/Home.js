@@ -5,7 +5,7 @@ import MainCard from "../component/MainCard";
 import Remainder from "../component/Remainder";
 
 const Home = (props) => {
-  return(
+    return(
       <View contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}
       >

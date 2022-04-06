@@ -1,23 +1,27 @@
 import React,{useState} from "react";
 import {View, StyleSheet, TouchableOpacity,TouchableWithoutFeedback, Dimensions} from "react-native";
-import { ColorPicker } from 'react-native-status-color-picker';
+import ColorPicker from "./ColorPicker";
 
 const CircleColorPicker = (props) => {
-    const [colors,setColors] = useState(["#F44336", "#E91E63", "#9C27B0", "#673AB7",
-        "#3F51B5", "#2196F3", "#03A9F4", "#00BCD4", "#009688",
-        "#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107",
-        "#FF9800", "#FF5722", "#795548"]);
-    const [selectedColor,setSelectedColor] = useState('#F44336');
+    const [colors,setColors] = useState(['#FFC1C1','#FFE6C1'
+        ,'#FDFF92','#A1FF92','#92E5FF','#E2A6FF',
+        '#FF7D7D','#FFC979','#FCFF62','#4CE865','#688EF0','#C365EF']);
+    const [selectedColor,setSelectedColor] = useState('#FFC1C1');
+    const [visible,setVisible] = useState(false)
   return(
           <View style={styles.circle} >
-              <View style = {[styles.circleIn]}
-              >
-                  <ColorPicker
-                      colors={colors}
-                      selectedColor={selectedColor}
-                      onSelect={(color)=>{setSelectedColor(color)}}
-                  />
+              <View style = {[styles.circleIn,{ backgroundColor:selectedColor}]}>
+                  <TouchableOpacity
+                      style={styles.circleIn}
+                      onPress={()=> {
+                          setVisible(!visible)
+                      }
+                      }
+                  >
+                    <ColorPicker setVisible={setVisible} visible={visible} colors={colors} SelectedColor={setSelectedColor}/>
+                  </TouchableOpacity>
               </View>
+
           </View>
 
   );
@@ -34,11 +38,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     circleIn:{
-        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
-        width: Dimensions.get('window').width * 0.21,
-        height: Dimensions.get('window').width * 0.21,
+        borderRadius: 82,
+        width:82,
+        height:82,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 });
 
