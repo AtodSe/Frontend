@@ -55,7 +55,7 @@ const styles=StyleSheet.create({
         textAlign:"left",
         fontSize:30,
         color:'#FAF8F0',
-        fontFamily:'Shabnam',
+        fontFamily:'ShabnamMedium',
     },
     mainCardsDown:{
         flex:1,

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View, StyleSheet, TouchableOpacity,TouchableWithoutFeedback, Dimensions} from "react-native";
 import ColorPicker from "./ColorPicker";
 
@@ -8,6 +8,9 @@ const CircleColorPicker = (props) => {
         '#FF7D7D','#FFC979','#FCFF62','#4CE865','#688EF0','#C365EF']);
     const [selectedColor,setSelectedColor] = useState('#FFC1C1');
     const [visible,setVisible] = useState(false)
+    useEffect(()=>{
+        props.setSelectColor(selectedColor)
+    },[selectedColor])
   return(
           <View style={styles.circle} >
               <View style = {[styles.circleIn,{ backgroundColor:selectedColor}]}>

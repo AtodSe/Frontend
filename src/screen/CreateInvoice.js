@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {
     View,
     StyleSheet,
@@ -11,10 +11,41 @@ import {
 import CircleColorPicker from "../component/CircleColorPicker";
 import InputBox from "../component/InputBox";
 import SubmitButton from "../component/SubmitButton";
+import axios from "axios";
+import {AuthContext} from "../../Context/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-const CreateAccount = () => {
-    const [total,setTotal] = useState("")
+const CreateInvoice = (props) => {
+    const [balance,setBalance] = useState("")
+    const [color,setColor] = useState("")
+    const [name,setName] = useState("")
+    const [state,setState] = useContext(AuthContext);
+    const pressSubmit = async () => {
+        let config = {
+            headers: {
+                Authorization: 'Bearer '+state.data.access
+            }
+        }
+
+        const URL = `/invoices/`;
+        try {
+            const {data} = await axios.post(URL,{
+                name: name,
+                color: color,
+                balance : balance
+            },config);
+            if (data.success){
+                console.log('brim')
+                console.log(data)
+                await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data));
+                props.navigation.navigate('Main')
+            }
+
+        }catch (e){
+            console.log(e)
+        }
+    }
 
   return(
       <View style={styles.container}>
@@ -26,19 +57,21 @@ const CreateAccount = () => {
                     </Text>
                 </View>
                 <View style={styles.colorPickerBox}>
-                       <CircleColorPicker/>
+                       <CircleColorPicker setSelectColor={setColor}/>
                 </View>
             </View>
             <View style={styles.main}>
 
-                <InputBox placeholder={'نام حساب'}/>
+                <InputBox placeholder={'نام حساب'}
+                          value={name} onChangeText={(text)=> setName(text)}
+                />
                 <InputBox placeholder={'مبلغ موجودی'} keyboardType={'number-pad'}
-                    value={total} onChangeText={(text)=> setTotal(text)}
+                    value={balance} onChangeText={(text)=> setBalance(text)}
                 />
 
             </View>
             <View style={styles.footer}>
-                <SubmitButton label={"ایجاد"}/>
+                <SubmitButton label={"ایجاد"} onPressIn={()=>pressSubmit()}/>
             </View>
 
         </KeyboardAvoidingView>
@@ -88,4 +121,4 @@ const styles = StyleSheet.create({
 
     }
 });
-export default CreateAccount;
+export default CreateInvoice;

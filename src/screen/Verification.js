@@ -13,6 +13,7 @@ import Timer from "../component/Timer";
 import axios from "axios";
 import {AuthContext} from "../../Context/auth";
 
+
 const Verification = (props) => {
     const [state,setState] = useContext(AuthContext);
     const [pressed,setPressed] = useState(false);
@@ -51,7 +52,7 @@ const Verification = (props) => {
                    if (data.success){
                        console.log('brim')
                        await AsyncStorage.setItem("@auth",JSON.stringify(data));
-                       props.navigation.navigate('Home')
+                       props.navigation.navigate('Main')
                    }
 
                }catch (e){

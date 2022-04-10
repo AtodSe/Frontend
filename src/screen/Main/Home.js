@@ -1,22 +1,22 @@
 import React, {useContext} from "react";
 import {View, StyleSheet, Dimensions, Text, FlatList, ScrollView} from "react-native";
-import Poster from "../component/Poster";
-import MainCard from "../component/MainCard";
-import Remainder from "../component/Remainder";
-import {AuthContext} from "../../Context/auth";
+import Poster from "../../component/Poster";
+import MainCard from "../../component/MainCard";
+import Remainder from "../../component/Remainder";
+import {AuthContext} from "../../../Context/auth";
 
 const Home = (props) => {
     const [state,setState] = useContext(AuthContext);
     return(
-      <View contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
+      <View style={styles.container}
+
       >
         <View style={styles.header}>
             <View style={styles.circles}>
 
             </View>
             <View style={styles.headerTextBox}>
-                <Text style={styles.headerText}>حساب پس انداز خودم</Text>
+                <Text style={styles.headerText}>{`حساب پس انداز خودم`}</Text>
             </View>
         </View>
           <View style={styles.posters}>
@@ -38,7 +38,7 @@ const Home = (props) => {
                     ریمایندر ها
                 </Text>
             </View>
-              <View style={{height:'64%' , paddingBottom:30}}>
+              <View style={{height:'64%' , paddingBottom:30 ,}}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
@@ -117,11 +117,10 @@ const Home = (props) => {
 }
 const styles= StyleSheet.create({
     container : {
-
         display:"flex",
         flex:1,
+        backgroundColor:'#FAF8F0',
         paddingBottom : 22,
-        backgroundColor: '#FAF8F0',
         justifyContent:"flex-start",
 
     },

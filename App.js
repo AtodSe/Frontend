@@ -3,8 +3,8 @@ import React from 'react';
 import {Text,StyleSheet} from 'react-native';
 import Login from "./src/screen/Login";
 import Verification from "./src/screen/Verification";
-import CreateAccount from "./src/screen/CreateAccount";
-import Home from "./src/screen/Home";
+import CreateInvoice from "./src/screen/CreateInvoice";
+import Home from "./src/screen/Main/Home";
 import ColorPicker from './src/component/ColorPicker'
 import AuthNav from "./src/nav/auth/authNav";
 

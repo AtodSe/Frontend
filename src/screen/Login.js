@@ -22,20 +22,6 @@ const Login = (props) => {
     const pressedButton = async () => {
         setAlert('');
         props.navigation.navigate('Verification',{number})
-        // const URL = `/auth/otp/+98${number}`;
-        // if (error.length === 0){
-        //     try {
-        //         const {data} = await axios.get(URL);
-        //         console.log(data)
-        //         if (data.success){
-        //             console.log('brim')
-        //
-        //         }
-        //
-        //     }catch (e){
-        //         console.log(e.response)
-        //         setAlert(e.message)
-        //     }
 
     }
   return(
