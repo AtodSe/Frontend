@@ -3,6 +3,7 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View ,TouchableWithoutFeedba
 
 const ColorPicker = (props) => {
     const colors = [];
+    const selcted =
     props.colors?.map((color)=>{
         colors.push(
             <TouchableWithoutFeedback  key={color} onPress={()=>{

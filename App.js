@@ -6,12 +6,12 @@ import Verification from "./src/screen/Verification";
 import CreateAccount from "./src/screen/CreateAccount";
 import Home from "./src/screen/Home";
 import ColorPicker from './src/component/ColorPicker'
-
+import AuthNav from "./src/nav/auth/authNav";
 
 const App = () => {
 
   return (
-      <CreateAccount/>
+      <AuthNav/>
   );
 };
 

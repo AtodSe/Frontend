@@ -1,27 +1,70 @@
-import React, {useState,useEffect} from "react";
-import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
+import React, {useState, useEffect, useContext} from "react";
+import {
+    AsyncStorage,
+    KeyboardAvoidingView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableWithoutFeedback,
+    View,TouchableOpacity
+} from "react-native";
 import SubmitButton from "../component/SubmitButton";
 import Timer from "../component/Timer";
+import axios from "axios";
+import {AuthContext} from "../../Context/auth";
 
-const Verification = () => {
+const Verification = (props) => {
+    const [state,setState] = useContext(AuthContext);
     const [pressed,setPressed] = useState(false);
     const [alert,setAlert] = useState("");
-    const [number,setNumber] = useState("+98 937 565 9202");
-    const [code,setCode] = useState("");
+    const [number,setNumber] = useState("+98"+props.route.params.number);
+    const [code,setCode] = useState('');
+    const [timerMin,setTimerMin] = useState(0)
+    const [timerSce,SetTimerSec] = useState(10)
+    const sendOtp =async (number)=>{
+        setAlert('')
+        const URL = `/auth/otp/${number}`;
 
-    const check = () => {
-        if (code.length<9){
-            setAlert("شماره وارد شده صحیح نمیباشد")
-        }else {
-            setAlert("")
-        }
+            try {
+                const {data} = await axios.get(URL);
+                if (data.success){
+                    console.log('brim')
+                }
+
+            }catch (e){
+                console.log(e.response)
+                setAlert(e.message)
+            }
     }
+    useEffect(()=>{
+
+    },[])
+   const pressSubmit = async () => {
+           setAlert('');
+           const URL = `/auth/otp/login/`;
+               try {
+                   const {data} = await axios.post(URL,{
+                       phone_number: number,
+                       otp: code,
+                   });
+                   console.log(data)
+                   if (data.success){
+                       console.log('brim')
+                       await AsyncStorage.setItem("@auth",JSON.stringify(data));
+                       props.navigation.navigate('Home')
+                   }
+
+               }catch (e){
+                   console.log(e.response)
+                   setAlert(e.message)
+               }
+       }
     return(
         <View style={styles.container}>
             <KeyboardAvoidingView style={styles.avoidContainer}>
                 <View style={styles.texts}>
                     <View style={styles.textBox}>
-                        <Text style={styles.text}>{"کد چهار رقمی که به شماره شما\n ارسال شده را وارد کنید."}</Text>
+                        <Text style={styles.text}>{"کد شش رقمی که به شماره شما\n ارسال شده را وارد کنید."}</Text>
                     </View>
                     <View style={styles.numberBox}>
                         <Text style={styles.text}>{number}</Text>
@@ -32,32 +75,36 @@ const Verification = () => {
                         <View style={styles.inputBox}>
                             <TextInput
                                 keyboardType={'number-pad'}
-                                maxLength={4}
+                                maxLength={6}
                                 style={styles.input}
-                                placeholder={'____'}
+                                placeholder={'______'}
                                 value={code}
-                                onChange={(text)=>{setCode(text)}}
+                                onChangeText={(text)=>{setCode(text)}}
                             />
                         </View>
                 </View>
                     <View style={styles.alertTextBox}>
                         {alert ?<Text style={styles.alertText}>{alert}</Text>
-                            :<Timer textStyle={styles.text} initialMinute={2} initialSeconds={0}/> }
+                            :<Timer textStyle={styles.text} initialMinute={timerMin} initialSeconds={timerSce} onPress={()=>{
+                                sendOtp(number)
+                            }}/> }
                     </View>
                     <View>
                         <Text style={styles.text}>
                             {"شماره موبایل خود را اشتبا وارد کرده‌اید؟"}
                         </Text>
-                        <Text style={[styles.text,{color:'#16B58F' }]}>
-                            {"ویرایش کنید"}
-                        </Text>
+                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Login')}}>
+                            <Text style={[styles.text,{color:'#16B58F' }]}>
+                                {"ویرایش کنید"}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
 
                 <View style={styles.buttons}>
                     <View style={styles.buttonBox}>
-                        <SubmitButton label={"ورود"} />
+                        <SubmitButton label={"ورود"} onPressIn={()=>pressSubmit()}/>
                     </View>
                 </View>
             </KeyboardAvoidingView>
@@ -97,7 +144,7 @@ const styles = StyleSheet.create({
         textAlign:"center",
         fontSize:18,
         fontFamily:'Shabnam',
-        letterSpacing: 20
+        letterSpacing: 15
     },
     inputBox:{
         borderBottomColor:'#5724AB',

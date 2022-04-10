@@ -1,18 +1,42 @@
-import React, {useState,useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View} from "react-native";
 import SubmitButton from "../component/SubmitButton";
+import axios from "axios";
+import {AuthContext} from "../../Context/auth";
 
-const Login = () => {
-
+const Login = (props) => {
+    const [state,setState] = useContext(AuthContext);
     const [pressed,setPressed] = useState(false);
     const [alert,setAlert] = useState("");
-    const [number,setNumber] = useState("");
+    const [number,setNumber] = useState({text: ''});
+    const [error,setError] = useState([]);
     const check = () => {
       if (number.length<9){
           setAlert("شماره وارد شده صحیح نمیباشد")
+          setError("شماره")
       }else {
           setAlert("")
+          setError([])
       }
+    }
+    const pressedButton = async () => {
+        setAlert('');
+        props.navigation.navigate('Verification',{number})
+        // const URL = `/auth/otp/+98${number}`;
+        // if (error.length === 0){
+        //     try {
+        //         const {data} = await axios.get(URL);
+        //         console.log(data)
+        //         if (data.success){
+        //             console.log('brim')
+        //
+        //         }
+        //
+        //     }catch (e){
+        //         console.log(e.response)
+        //         setAlert(e.message)
+        //     }
+
     }
   return(
       <View style={styles.container}>
@@ -30,8 +54,8 @@ const Login = () => {
                         maxLength={10}
                         style={styles.input}
                         placeholder={'912345678'}
-                        value={number}
-                        onChange={(text)=>{setNumber(text)}}
+                        value={number.text}
+                        onChangeText={(text)=>{setNumber(text)}}
                     />
                 </View>
               </View>
@@ -39,7 +63,7 @@ const Login = () => {
                   <Text style={styles.alertText}>{alert}</Text>
               </View>
               <View style={styles.buttonBox}>
-                 <SubmitButton label={"تایید"} onPressIn={()=>check()}/>
+                 <SubmitButton label={"تایید"} onPressIn={()=>pressedButton()}/>
               </View>
           </KeyboardAvoidingView>
       </View>

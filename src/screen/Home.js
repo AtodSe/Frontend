@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import {View, StyleSheet, Dimensions, Text, FlatList, ScrollView} from "react-native";
 import Poster from "../component/Poster";
 import MainCard from "../component/MainCard";
 import Remainder from "../component/Remainder";
+import {AuthContext} from "../../Context/auth";
 
 const Home = (props) => {
+    const [state,setState] = useContext(AuthContext);
     return(
       <View contentContainerStyle={styles.container}
         showsVerticalScrollIndicator={false}

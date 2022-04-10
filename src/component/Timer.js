@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import {View,Text} from "react-native";
+import {View, Text, TouchableOpacity,StyleSheet} from "react-native";
 
 const Timer = (props:any) => {
     const {initialMinute = 0,initialSeconds = 0} = props;
@@ -28,11 +28,23 @@ const Timer = (props:any) => {
     return (
         <View>
             { minutes === 0 && seconds === 0
-                ? null
+                ? <TouchableOpacity {...props}>
+                    <Text style={styles.text}>
+                        {"ارسال دوباره کد"}
+                    </Text>
+                </TouchableOpacity>
                 : <Text style={props.textStyle}> {minutes}:{seconds < 10 ?  `0${seconds}` : seconds}</Text>
             }
         </View>
     )
 }
-
+const styles = StyleSheet.create({
+    text:{
+        textAlign:"center",
+        fontSize:16,
+        color:'#16B58F',
+        fontFamily:'Shabnam',
+        lineHeight:26
+    }
+})
 export default Timer;
