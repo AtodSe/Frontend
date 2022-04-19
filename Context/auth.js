@@ -9,17 +9,25 @@ const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     const [state,setState] = useState({
         data:'',
-        success:'',
-        defaultInvoiceId:''
+        defaultInvoiceId:0
     });
     axios.defaults.baseURL = API;
     useEffect(()=>{
+        //AsyncStorage.clear()
         const loadFromAsyncStorage = async () => {
             let data = await AsyncStorage.getItem('@auth');
             let id = await AsyncStorage.getItem('@defaultInvoiceId');
-            const as = JSON.parse(data);
-            const idd = JSON.parse(id);
-            setState({...state,data: as.data,success: as.success,defaultInvoiceId:idd.data.id});
+            if(id){
+                const idd = JSON.parse(id);
+                console.log("auth Provider "+idd)
+                state.defaultInvoiceId=idd;
+
+            }
+            if (data){
+                const as = JSON.parse(data);
+                console.log("auth Provider "+data)
+                setState({...state,data: as.data});
+            }
         }
         loadFromAsyncStorage();
     },[]);

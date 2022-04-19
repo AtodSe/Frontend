@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {
     View,
     StyleSheet,
@@ -21,10 +21,11 @@ const CreateInvoice = (props) => {
     const [color,setColor] = useState("")
     const [name,setName] = useState("")
     const [state,setState] = useContext(AuthContext);
+    const {Token} = props.route.params;
     const pressSubmit = async () => {
         let config = {
             headers: {
-                Authorization: 'Bearer '+state.data.access
+                Authorization: 'Bearer '+Token
             }
         }
 
@@ -36,16 +37,17 @@ const CreateInvoice = (props) => {
                 balance : balance
             },config);
             if (data.success){
-                console.log('brim')
                 console.log(data)
-                await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data));
+                let first ={data: data.data[0],token:Token}
+                await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data.data.id));
                 props.navigation.navigate('Main')
             }
 
         }catch (e){
-            console.log(e)
+            console.log(e.response)
         }
     }
+
 
   return(
       <View style={styles.container}>
@@ -71,7 +73,7 @@ const CreateInvoice = (props) => {
 
             </View>
             <View style={styles.footer}>
-                <SubmitButton label={"ایجاد"} onPressIn={()=>pressSubmit()}/>
+                <SubmitButton label={"ایجاد"} onPress={()=>pressSubmit(state.data.access?state.data.access:Token)}/>
             </View>
 
         </KeyboardAvoidingView>

@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
 import {
-    AsyncStorage,
     KeyboardAvoidingView,
     StyleSheet,
     Text,
@@ -11,6 +10,8 @@ import {
 import SubmitButton from "../component/SubmitButton";
 import Timer from "../component/Timer";
 import axios from "axios";
+import Invoice from "./Invoice/Invoice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthContext} from "../../Context/auth";
 
 
@@ -21,7 +22,8 @@ const Verification = (props) => {
     const [number,setNumber] = useState("+98"+props.route.params.number);
     const [code,setCode] = useState('');
     const [timerMin,setTimerMin] = useState(0)
-    const [timerSce,SetTimerSec] = useState(10)
+    const [timerSce,SetTimerSec] = useState(5)
+
     const sendOtp =async (number)=>{
         setAlert('')
         const URL = `/auth/otp/${number}`;
@@ -29,7 +31,7 @@ const Verification = (props) => {
             try {
                 const {data} = await axios.get(URL);
                 if (data.success){
-                    console.log('brim')
+                    console.log('otp send')
                 }
 
             }catch (e){
@@ -46,13 +48,15 @@ const Verification = (props) => {
                try {
                    const {data} = await axios.post(URL,{
                        phone_number: number,
-                       otp: code,
+                       otp: "123456",
+                       bypass: true
                    });
                    console.log(data)
                    if (data.success){
-                       console.log('brim')
+                       console.log('token set')
                        await AsyncStorage.setItem("@auth",JSON.stringify(data));
-                       props.navigation.navigate('Main')
+                       setState({...state,data:data.data})
+                       props.navigation.navigate('Invoice',{data})
                    }
 
                }catch (e){
@@ -105,7 +109,7 @@ const Verification = (props) => {
 
                 <View style={styles.buttons}>
                     <View style={styles.buttonBox}>
-                        <SubmitButton label={"ورود"} onPressIn={()=>pressSubmit()}/>
+                        <SubmitButton label={"ورود"} onPress={()=>pressSubmit()}/>
                     </View>
                 </View>
             </KeyboardAvoidingView>

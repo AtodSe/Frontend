@@ -1,36 +1,57 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState,} from "react";
 import axios from "axios";
-import {Text} from "react-native";
+import {Text , View} from "react-native";
 import {AuthContext} from "../../../Context/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Invoice = () => {
+const Invoice = (props) => {
     const [state,setState] = useContext(AuthContext);
-    const check = async ()=>{
+    const[token,setToken] = useState('');
+    let Token  = "";
+    const {data} = props.route.params;
+
+    const check = async (token)=>{
+        console.log('check token : '+token)
         let config = {
             headers: {
-                Authorization: 'Bearer '+state.data.access
+                Authorization: 'Bearer '+ token
             }
         }
-        console.log(state)
-        console.log('111')
         const URL = `/invoices/`;
         try {
             const {data} = await axios.get(URL,config);
-            console.log(data)
+           if (data.data.length>0){
+               console.log(data)
+               let first ={data: data.data[0],token:token}
+               await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data.data[0].id));
+               setState({...state,defaultInvoiceId:data.data[0].id})
+               props.navigation.navigate('Main')
+           }
+           else {
+               console.log(data)
+               props.navigation.navigate('CreateInvoice',{Token})
+           }
         }
         catch (e){
-        console.log(e)
+            console.log(e)
 
+        }
+    }
 
-    }
-    }
     useEffect(()=>{
-            check()
-    },[])
+        Token = data.data.access ?data.data.access : state.data.access
+        if (Token !== undefined||Token!==''){
+            setToken(Token)
+            check(Token)
+        }
+    },[Token])
   return(
-      <Text>
-          invoice
-      </Text>
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <Text>
+              {token+" "}
+          </Text>
+      </View>
+
   )
 }
 

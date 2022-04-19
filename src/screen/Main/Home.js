@@ -1,22 +1,50 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, StyleSheet, Dimensions, Text, FlatList, ScrollView} from "react-native";
 import Poster from "../../component/Poster";
 import MainCard from "../../component/MainCard";
 import Remainder from "../../component/Remainder";
 import {AuthContext} from "../../../Context/auth";
+import axios from "axios";
 
-const Home = (props) => {
+const Home = () => {
     const [state,setState] = useContext(AuthContext);
+    const [invoiceName,setInvoiceName] = useState("");
+    const [invoiceColor,setInvoiceColor] = useState("");
+    const [invoiceBalance,setInvoiceBalance] = useState("");
+    const[token,setToken] = useState('');
+    let Token = state.data.access
+    const loadFromApi= async(token,id)=> {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }
+        const URL = `/invoices/`+id;
+        try {
+            const {data} = await axios.get(URL, config);
+            setInvoiceName(data.data.name)
+            setInvoiceColor(data.data.color)
+            setInvoiceBalance(data.data.balance)
+        } catch (e) {
+            console.log(e.response)
+        }
+    }
+    useEffect(()=>{
+        Token = state.data.access
+        if (Token !== undefined){
+            loadFromApi(state.data.access,state.defaultInvoiceId)
+            setToken(Token)
+        }
+    },[Token])
     return(
       <View style={styles.container}
-
       >
         <View style={styles.header}>
-            <View style={styles.circles}>
+            <View style={[styles.circles,{backgroundColor: invoiceColor?invoiceColor:'#FFC1C1'}]}>
 
             </View>
             <View style={styles.headerTextBox}>
-                <Text style={styles.headerText}>{`حساب پس انداز خودم`}</Text>
+                <Text style={styles.headerText}>{invoiceName}</Text>
             </View>
         </View>
           <View style={styles.posters}>
@@ -30,7 +58,7 @@ const Home = (props) => {
             </ScrollView>
           </View>
           <View style={styles.cards}>
-            <MainCard/>
+            <MainCard balance={invoiceBalance}/>
           </View>
           <View style={styles.main}>
             <View style={styles.mainTiterBox}>
@@ -132,7 +160,7 @@ const styles= StyleSheet.create({
         marginHorizontal:30
     },
     circles:{
-        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        borderRadius: 30,
         width: Dimensions.get('window').width * 0.15,
         height: Dimensions.get('window').width * 0.15,
         backgroundColor:'#62D31D',

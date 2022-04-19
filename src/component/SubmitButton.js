@@ -8,7 +8,8 @@ const SubmitButton = (props) => {
         <View>
             <TouchableWithoutFeedback
                 onPressIn={()=>{
-                    setPressed(true)
+                    setPressed(true);
+
                 }}
                 onPressOut={()=>{
                     setPressed(false)

@@ -1,13 +1,15 @@
 import React from "react";
 import {View, StyleSheet, Text, Dimensions} from "react-native";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import NumberFormat from 'react-number-format';
 import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
+import {ReactNativeNumberFormat} from "../nav/ReactNativeNumberFormat";
 
 const MainCard = (props) => {
   return(
       <View style={styles.mainCards}>
           <View style={styles.mainCardsTop}>
-              <Text style={styles.mainCardsTopText}> 4,650,000 </Text>
+              <ReactNativeNumberFormat  textStyle={styles.mainCardsTopText} value={props.balance} />
           </View>
           <View style={styles.mainCardsDown}>
               <View style={styles.depositBox}>

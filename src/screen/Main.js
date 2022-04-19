@@ -1,15 +1,17 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "./Main/Home";
 import Reminder from "./Main/Reminder";
 import Diagram from "./Main/Diagram";
 import Transaction from "./Main/Transaction";
 import {Image, StyleSheet, View} from 'react-native'
+import {AuthContext} from "../../Context/auth";
 
 
 const Tab = createBottomTabNavigator();
 
 const Main = () => {
+
     return(
         <Tab.Navigator
             initialRouteName={'Home'}
@@ -86,9 +88,6 @@ const Main = () => {
                                 }
                             }
                         }
-
-
-
             />
 
         </Tab.Navigator>
