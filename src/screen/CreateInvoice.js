@@ -37,9 +37,8 @@ const CreateInvoice = (props) => {
                 balance : balance
             },config);
             if (data.success){
-                console.log(data)
-                let first ={data: data.data[0],token:Token}
                 await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data.data.id));
+                setState({...state,defaultInvoiceId:data.data.id})
                 props.navigation.navigate('Main')
             }
 
