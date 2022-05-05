@@ -4,7 +4,6 @@ import {NavigationContainer} from "@react-navigation/native";
 import SplashScreen from "react-native-splash-screen";
 import RootNav from "./RootNav";
 
-
 const AuthNav = (props) => {
     useEffect(()=>{
         SplashScreen.hide();

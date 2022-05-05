@@ -1,6 +1,7 @@
 import React from "react";
 import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native'
-import {source} from "react-native/Libraries/DeprecatedPropTypes/DeprecatedImagePropType";
+
+
 const DateProgressBar = (props) => {
     return(
         <View style={styles.container}>
@@ -20,11 +21,16 @@ const DateProgressBar = (props) => {
                 </View>
             </View>
             <View style={styles.editButtonBox}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={()=>{
+                        props.setShowDatePicker(true)
+                    }}
+                >
                     <Image source={require('../../assets/image/editButton.png')}/>
                 </TouchableOpacity>
             </View>
         </View>
+
     )
 }
 const styles = StyleSheet.create({

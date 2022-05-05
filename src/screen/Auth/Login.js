@@ -8,14 +8,14 @@ import {
     TouchableWithoutFeedback,
     View
 } from "react-native";
-import SubmitButton from "../component/SubmitButton";
+import SubmitButton from "../../component/SubmitButton";
 
 
 const Login = (props) => {
 
     const [pressed,setPressed] = useState(false);
     const [alert,setAlert] = useState("");
-    const [number,setNumber] = useState("9375659202");
+    const [number,setNumber] = useState("");
     const check = () => {
       if (number.length!==10){
           setAlert("شماره وارد شده صحیح نمیباشد")

@@ -9,7 +9,8 @@ const AuthContext = createContext();
 const AuthProvider = ({children}) => {
     const [state,setState] = useState({
         data:'',
-        defaultInvoiceId:0
+        defaultInvoiceId:0,
+        loading:false
     });
     axios.defaults.baseURL = API;
     useEffect(()=>{

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         height:125,
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 110
     },
     colorsBox:{
         flexDirection:'row',

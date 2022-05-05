@@ -7,12 +7,11 @@ import {
     TouchableWithoutFeedback,
     View,TouchableOpacity
 } from "react-native";
-import SubmitButton from "../component/SubmitButton";
-import Timer from "../component/Timer";
+import SubmitButton from "../../component/SubmitButton";
+import Timer from "../../component/Timer";
 import axios from "axios";
-import Invoice from "./Invoice/Invoice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {AuthContext} from "../../Context/auth";
+import {AuthContext} from "../../../Context/auth";
 
 
 const Verification = (props) => {
@@ -48,7 +47,7 @@ const Verification = (props) => {
                try {
                    const {data} = await axios.post(URL,{
                        phone_number: number,
-                       otp: "123456",
+                       otp: code,
                        bypass: true
                    });
                    console.log(data)
@@ -56,7 +55,7 @@ const Verification = (props) => {
                        console.log('token set')
                        await AsyncStorage.setItem("@auth",JSON.stringify(data));
                        setState({...state,data:data.data})
-                       props.navigation.navigate('Invoice',{data})
+                       props.navigation.navigate('Main')
                    }
 
                }catch (e){

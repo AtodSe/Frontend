@@ -1,9 +1,7 @@
 import React from "react";
 import {View, StyleSheet, Dimensions, Text} from "react-native";
 
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
-import {faHospital} from '@fortawesome/free-regular-svg-icons/faHospital'
+import {ReactNativeNumberFormat} from "../nav/ReactNativeNumberFormat";
 
 const TreansactionCard = (props) => {
 
@@ -21,8 +19,18 @@ const TreansactionCard = (props) => {
                     {props.date}
                 </Text>
             </View>
-            <View style={styles.progressBox}>
-               <Text>-400,000</Text>
+            <View style={styles.balanceTextBox}>
+                {props.deposit?
+                    <>
+                        <Text style={[styles.balanceText,{ color:'#09B785'}]}>+</Text>
+                        <ReactNativeNumberFormat  textStyle={[styles.balanceText,{ color:'#09B785'}]} value={props.balance} />
+                    </>
+                    :
+                    <>
+                        <Text style={[styles.balanceText,{color: '#EC4141'}]}>-</Text>
+                        <ReactNativeNumberFormat  textStyle={[styles.balanceText,{ color:'#EC4141'}]} value={props.balance} />
+                    </>
+                }
             </View>
         </View>
     );
@@ -36,7 +44,7 @@ const styles = StyleSheet.create({
         width:340,
         height:70,
         borderRadius:20,
-        marginVertical:6
+        marginVertical:6,
     },
     iconBox:{
         flex:1,
@@ -62,20 +70,22 @@ const styles = StyleSheet.create({
     },
     date:{
         textAlign:"right",
-        fontSize:16,
+        fontSize:18,
         marginLeft:10,
         color:'#8A7F9D',
-        fontFamily:'Shabnam',
+        fontFamily:'Shabnam-FD',
     },
-    progressBox:{
+    balanceTextBox:{
         flex:1,
         justifyContent:"center",
         alignItems:"center",
-        marginHorizontal:8
+        marginHorizontal:8,
+        flexDirection:"row"
     },
-    percentText:{
+    balanceText:{
         fontSize:18,
         color:'#302B38',
+        fontFamily:'Shabnam-FD',
     }
 });
 export default TreansactionCard;

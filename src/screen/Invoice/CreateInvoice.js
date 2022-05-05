@@ -8,12 +8,13 @@ import {
     Dimensions,
     TouchableOpacity, Modal
 } from "react-native";
-import CircleColorPicker from "../component/CircleColorPicker";
-import InputBox from "../component/InputBox";
-import SubmitButton from "../component/SubmitButton";
+import CircleColorPicker from "../../component/CircleColorPicker";
+import InputBox from "../../component/InputBox";
+import SubmitButton from "../../component/SubmitButton";
 import axios from "axios";
-import {AuthContext} from "../../Context/auth";
+import {AuthContext} from "../../../Context/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useNavigation} from "@react-navigation/native";
 
 
 const CreateInvoice = (props) => {
@@ -21,11 +22,11 @@ const CreateInvoice = (props) => {
     const [color,setColor] = useState("")
     const [name,setName] = useState("")
     const [state,setState] = useContext(AuthContext);
-    const {Token} = props.route.params;
+    const navigation = useNavigation();
     const pressSubmit = async () => {
         let config = {
             headers: {
-                Authorization: 'Bearer '+Token
+                Authorization: 'Bearer '+state.data.access
             }
         }
 
@@ -39,7 +40,8 @@ const CreateInvoice = (props) => {
             if (data.success){
                 await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data.data.id));
                 setState({...state,defaultInvoiceId:data.data.id})
-                props.navigation.navigate('Main')
+                console.log('create invoices',data)
+                navigation.navigate('Home',{'paramPropKey': 'paramPropValue'})
             }
 
         }catch (e){

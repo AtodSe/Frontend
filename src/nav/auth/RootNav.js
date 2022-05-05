@@ -1,32 +1,41 @@
-import React, {useContext, useEffect} from "react";
-import Login from "../../screen/Login";
-import Verification from "../../screen/Verification";
-import CreateInvoice from "../../screen/CreateInvoice";
+import React, {useContext, useEffect, useState} from "react";
+import Login from "../../screen/Auth/Login";
+import Verification from "../../screen/Auth/Verification";
+import CreateInvoice from "../../screen/Invoice/CreateInvoice";
 import Main from "../../screen/Main";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {AuthContext} from "../../../Context/auth";
-import Invoice from "../../screen/Invoice/Invoice";
+import Loader from "../../screen/Loader";
+
 const Stack = createNativeStackNavigator();
 export default function RootNav() {
     const [state,setState] = useContext(AuthContext);
-    const authenticated = state && state.data!==null&&state.defaultInvoiceId !==0;
-  return(
-      <Stack.Navigator
-          screenOptions={{headerShown:false}}
-      >
-          {authenticated
-              ?   <Stack.Screen name={'Main'} component={Main}/>
-              :
-              <>
-                  <Stack.Screen name={'Login'} component={Login}/>
-                  <Stack.Screen name={'Verification'} component={Verification}/>
-                  <Stack.Screen name={'Invoice'} component={Invoice}/>
-                  <Stack.Screen name={'CreateInvoice'} component={CreateInvoice}/>
-                  <Stack.Screen name={'Main'} component={Main}/>
-              </>
-          }
+    const [isLoaded,setIsLoaded] = useState(false);
+    const [isAuthenticated,setIsAuthenticated] = useState(null);
 
-      </Stack.Navigator>
-  );
+    useEffect(()=>{
+        if(!state.loading){
+            setState({...state,loading: true})
+        }
+        if(state.loading){
+            setIsAuthenticated(state && state.data!=='')
+        }
+    },[state.loading])
+    const x =(
+            <Stack.Navigator
+                screenOptions={{headerShown:false}}
+                >
+                {isAuthenticated
+                    ?
+                    <Stack.Screen name={'Main'} component={Main}/>
+                    :
+                    <>
+                        <Stack.Screen name={'Login'} component={Login}/>
+                        <Stack.Screen name={'Verification'} component={Verification}/>
+                    </>
+                }
+            </Stack.Navigator>)
+    return(state.loading?x:<Loader/>)
+
 }
 

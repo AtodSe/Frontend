@@ -5,37 +5,47 @@ import MainCard from "../../component/MainCard";
 import Remainder from "../../component/Remainder";
 import {AuthContext} from "../../../Context/auth";
 import axios from "axios";
+import { useNavigation } from '@react-navigation/native';
 
-const Home = () => {
+
+
+const Home = (props) => {
     const [state,setState] = useContext(AuthContext);
     const [invoiceName,setInvoiceName] = useState("");
     const [invoiceColor,setInvoiceColor] = useState("");
     const [invoiceBalance,setInvoiceBalance] = useState("");
-    const[token,setToken] = useState('');
-    let Token = state.data.access
+    const navigation = useNavigation();
     const loadFromApi= async(token,id)=> {
         let config = {
             headers: {
                 Authorization: 'Bearer ' + token
             }
         }
-        const URL = `/invoices/`+id;
+        const URL = `/invoices`;
         try {
             const {data} = await axios.get(URL, config);
-            setInvoiceName(data.data.name)
-            setInvoiceColor(data.data.color)
-            setInvoiceBalance(data.data.balance)
+            if(data.data.length){
+                if (state.defaultInvoiceId===0) {
+                    setInvoiceName(data.data[0].name)
+                    setInvoiceColor(data.data[0].color)
+                    setInvoiceBalance(data.data[0].balance)
+                }
+                else {
+                   let defaultInvoice = data.data.find(x=>x.id ===state.defaultInvoiceId)
+                    setInvoiceName(defaultInvoice.name)
+                    setInvoiceColor(defaultInvoice.color)
+                    setInvoiceBalance(defaultInvoice.balance)
+                }
+            }else{
+                navigation.navigate('CreateInvoice')
+            }
         } catch (e) {
             console.log(e.response)
         }
     }
     useEffect(()=>{
-        Token = state.data.access
-        if (Token !== undefined){
-            loadFromApi(state.data.access,state.defaultInvoiceId)
-            setToken(Token)
-        }
-    },[Token])
+        loadFromApi(state.data.access,state.defaultInvoiceId)
+    },[props.route])
     return(
       <View style={styles.container}
       >

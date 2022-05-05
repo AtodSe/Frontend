@@ -1,85 +1,98 @@
-import React from "react";
+import React, {useState} from "react";
 import {View, Text, StyleSheet, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native'
 import CircleIcon from "../component/CircleIcon";
 import BalanceProgressBar from "../component/BalanceProgressBar";
 import DateProgressBar from "../component/DateProgressBar";
-import Remainder from "../component/Remainder";
 import TransactionCard from "../component/TransactionCard";
+import DatePickerJalali from "../component/DatePickerJalali";
+
 const RemainderDetail = () => {
+    const [showDatePicker,setShowDatePicker] = useState(false)
   return(
-      <View style={styles.container}>
-          <View style={styles.header}>
-              <View>
-                  <CircleIcon circleStyle={{backgroundColor:'#F3BB2C'}}/>
+      <View style={styles.body}>
+          <View style={styles.container}>
+              <View style={styles.header}>
+                  <View>
+                      <CircleIcon circleStyle={{backgroundColor:'#F3BB2C'}}/>
+                  </View>
+                  <View>
+                      <Text style={styles.textTitle}>
+                          خرید عید
+                      </Text>
+                  </View>
               </View>
-              <View>
-                  <Text style={styles.textTitle}>
-                      خرید عید
-                  </Text>
+              <View style={styles.progressBars}>
+                <View>
+                    <BalanceProgressBar bgcolor={"#6a1b9a"} completed={80}/>
+                </View>
+                <View>
+                    <DateProgressBar bgcolor={"#16B58F"} completed={80} setShowDatePicker={setShowDatePicker}/>
+                </View>
               </View>
-          </View>
-          <View style={styles.progressBars}>
-            <View>
-                <BalanceProgressBar bgcolor={"#6a1b9a"} completed={80}/>
-            </View>
-            <View>
-                <DateProgressBar bgcolor={"#16B58F"} completed={80}/>
-            </View>
-          </View>
-          <View style={styles.detail}>
-            <TextInput
-                multiline={true}
-                numberOfLines={10}
-                style={styles.detailTextInput}
-            />
-          </View>
-          <View style={styles.transaction}>
-              <View style={styles.transactionHeader}>
-                <TouchableOpacity style={styles.circle}>
-                    <Text style={{color:'#5724AB',fontSize:40}}>+</Text>
-                </TouchableOpacity>
-                  <Text style={styles.transactionHeaderText}>اضافه کردن یک تراکنش</Text>
+              <View style={styles.detail}>
+                <TextInput
+                    multiline={true}
+                    numberOfLines={10}
+                    style={styles.detailTextInput}
+                />
               </View>
-              <View style={{height:'97%' , paddingBottom:30, alignItems:'center'}}>
-                  <ScrollView
-                      showsVerticalScrollIndicator={false}
+              <View style={styles.transaction}>
+                  <View style={styles.transactionHeader}>
+                    <TouchableOpacity style={styles.circle}>
+                        <Text style={{color:'#5724AB',fontSize:40}}>+</Text>
+                    </TouchableOpacity>
+                      <Text style={styles.transactionHeaderText}>اضافه کردن یک تراکنش</Text>
+                  </View>
+                  <View
+                      style={
+                        {height:'97%' , paddingBottom:50, alignItems:'center'}
+                      }
                   >
-                      <TransactionCard
-                          title={'سفر بوشهر'}
-                          date={'تا فردا'}
-                          percent={60}
-                          circleStyle={{
-                              backgroundColor:'#84C4FF'
-                          }}
+                      <ScrollView
+                          showsVerticalScrollIndicator={false}
 
-                      />
-                      <TransactionCard
-                          title={'خرید عید'}
-                          date={'تا 1/1/1401'}
-                          percent={75}
-                          circleStyle={{
-                              backgroundColor:'#F3BB2C'
-                          }}
-
-                      />
-                      <TransactionCard
-                          title={'خرید عید'}
-                          date={'تا 1/1/1401'}
-                          percent={75}
-                          circleStyle={{
-                              backgroundColor:'#F3BB2C'
-                          }}
-
-                      />
-                  </ScrollView>
+                      >
+                          <TransactionCard
+                              title={'سفر بوشهر'}
+                              date={'1/5/1401'}
+                              circleStyle={{
+                                  backgroundColor:'#84C4FF'
+                              }}
+                              balance={'800000'}
+                              deposit={true}
+                          />
+                          <TransactionCard
+                              title={'خرید عید'}
+                              date={'1/1/1401'}
+                              circleStyle={{
+                                  backgroundColor:'#F3BB2C'
+                              }}
+                              balance={'600000'}
+                              deposit={false}
+                          />
+                          <TransactionCard
+                              title={'خرید عید'}
+                              date={'1/1/1401'}
+                              circleStyle={{
+                                  backgroundColor:'#F3BB2C'
+                              }}
+                              balance={'400000'}
+                              deposit={true}
+                          />
+                      </ScrollView>
+                  </View>
               </View>
+              <DatePickerJalali visible={showDatePicker} setVisible={setShowDatePicker}/>
           </View>
       </View>
   )
 }
 const styles = StyleSheet.create({
-    container:{
+    body:{
         backgroundColor:'#FAF8F0',
+        flex:1,
+    },
+    container:{
         flex:1,
         marginHorizontal:20,
     },
