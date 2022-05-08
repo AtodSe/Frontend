@@ -76,7 +76,7 @@ const Home = (props) => {
                     ریمایندر ها
                 </Text>
             </View>
-              <View style={{height:'64%' , paddingBottom:30 ,}}>
+              <View style={{height:'64%' , paddingBottom:30 }}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
@@ -87,6 +87,7 @@ const Home = (props) => {
                     circleStyle={{
                         backgroundColor:'#84C4FF'
                     }}
+                    onPress={()=>{navigation.navigate('RemainderDetail')}}
 
                 />
                 <Remainder
@@ -96,6 +97,7 @@ const Home = (props) => {
                     circleStyle={{
                         backgroundColor:'#F3BB2C'
                     }}
+                    onPress={()=>{navigation.navigate('RemainderDetail')}}
 
                 />
                 <Remainder
@@ -105,6 +107,7 @@ const Home = (props) => {
                     circleStyle={{
                         backgroundColor:'#FE54B0'
                     }}
+                    onPress={()=>{navigation.navigate('RemainderDetail')}}
 
                 />
                 <Remainder

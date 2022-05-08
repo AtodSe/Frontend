@@ -6,6 +6,8 @@ import Diagram from "./Main/Diagram";
 import Transaction from "./Main/Transaction";
 import {Image, StyleSheet} from 'react-native'
 import CreateInvoice from "./Invoice/CreateInvoice";
+import RemainderDetail from "./RemainderDetail";
+import Add from "./Main/Add";
 
 
 
@@ -60,6 +62,21 @@ const Main = () => {
                                 }
                             }
                 />
+                <Tab.Screen name="Add" component={Add}
+                            options={
+                                {
+                                    tabBarIcon:({focused})=>{
+                                        const image = focused
+                                            ? require('../../assets/image/tabBarIcons/add.png')
+                                            : require('../../assets/image/tabBarIcons/add.png')
+                                        return(
+                                            <Image source={image}/>
+                                        )
+                                    },
+                                    tabBarStyle:{ display: 'none' }
+                                }
+                            }
+                />
                 <Tab.Screen name="Transaction" component={Transaction}
                             options={
                                 {
@@ -91,6 +108,14 @@ const Main = () => {
                 />
                 <Tab.Screen name="CreateInvoice"
                             component={CreateInvoice}
+                            options={{
+                                tabBarButton: props => null,
+                                tabBarVisible: false,
+                                tabBarStyle:{ display: 'none' }
+                            }}
+                />
+                <Tab.Screen name="RemainderDetail"
+                            component={RemainderDetail}
                             options={{
                                 tabBarButton: props => null,
                                 tabBarVisible: false,

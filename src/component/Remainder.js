@@ -1,5 +1,5 @@
 import React from "react";
-import {View, StyleSheet, Dimensions, Text} from "react-native";
+import {View, StyleSheet, Dimensions, Text, TouchableWithoutFeedback} from "react-native";
 import ProgressCircle from  'react-native-progress-circle';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
@@ -8,38 +8,40 @@ import {faHospital} from '@fortawesome/free-regular-svg-icons/faHospital'
 const Remainder = (props) => {
 
   return(
-      <View style={[styles.container, props.mainStyle]}>
-        <View style={styles.iconBox}>
-            <View style={[styles.circle,props.circleStyle]}>
+      <TouchableWithoutFeedback {...props}>
+          <View style={[styles.container, props.mainStyle]}>
+            <View style={styles.iconBox}>
+                <View style={[styles.circle,props.circleStyle]}>
 
-                <FontAwesomeIcon
-                    size={25}
-                    icon={ faHospital } />
+                    <FontAwesomeIcon
+                        size={25}
+                        icon={ faHospital } />
 
+                </View>
             </View>
-        </View>
-          <View style={styles.textBox}>
-            <Text style={styles.titer}>
-                {props.title}
-            </Text>
-              <Text style={styles.date}>
-                  {props.date}
-            </Text>
-          </View>
-          <View style={styles.progressBox}>
-              <ProgressCircle
-                  percent={props.percent}
-                  radius={30}
-                  borderWidth={3}
-                  color="#5724AB"
-                  shadowColor="#E9DBFF"
-                  bgColor={'#FAF8F0'}
+              <View style={styles.textBox}>
+                <Text style={styles.titer}>
+                    {props.title}
+                </Text>
+                  <Text style={styles.date}>
+                      {props.date}
+                </Text>
+              </View>
+              <View style={styles.progressBox}>
+                  <ProgressCircle
+                      percent={props.percent}
+                      radius={30}
+                      borderWidth={3}
+                      color="#5724AB"
+                      shadowColor="#E9DBFF"
+                      bgColor={'#FAF8F0'}
 
-              >
-                  <Text style={styles.percentText}>{`${props.percent}%`}</Text>
-              </ProgressCircle>
+                  >
+                      <Text style={styles.percentText}>{`${props.percent}%`}</Text>
+                  </ProgressCircle>
+              </View>
           </View>
-      </View>
+      </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
