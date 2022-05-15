@@ -60,7 +60,7 @@ const AddReminder = () => {
       <View style={styles.body}>
           <View style={styles.container}>
               <View style={styles.iconPickerBox}>
-                  <CircleProfilePickerRemainder setIcon={setIcon}/>
+                  <CircleProfilePickerRemainder setIcon={setIcon} icon={icon}/>
               </View>
               <View style={styles.textInputBox}>
                 <InputBox placeholder={'نام ریمایندر'}

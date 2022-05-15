@@ -109,10 +109,12 @@ const Home = (props) => {
                 {
                     remainders?.map((remainder)=>{
                            return(
-                              <Remainder
+                              <Remainder key={remainder.id}
                                   title={remainder.name}
                                   date={remainder.due_date}
+                                  iconid={remainder.icon}
                                   percent={21}
+                                  borderColor={remainder.color}
                               />
                            )
                     })

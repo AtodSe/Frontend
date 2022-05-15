@@ -1,22 +1,16 @@
 import React from "react";
-import {View, StyleSheet, Dimensions, Text, TouchableWithoutFeedback} from "react-native";
+import {View, StyleSheet, Dimensions, Text, TouchableWithoutFeedback, Image} from "react-native";
 import ProgressCircle from  'react-native-progress-circle';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMugSaucer } from '@fortawesome/free-solid-svg-icons/faMugSaucer'
-import {faHospital} from '@fortawesome/free-regular-svg-icons/faHospital'
+import icon from "../../assets/image/remainderIcon";
 
 const Remainder = (props) => {
-
+    const image = icon.find(x=> x.id===props.iconid)
   return(
       <TouchableWithoutFeedback {...props}>
           <View style={[styles.container, props.mainStyle]}>
             <View style={styles.iconBox}>
-                <View style={[styles.circle,props.circleStyle]}>
-
-                    <FontAwesomeIcon
-                        size={25}
-                        icon={ faHospital } />
-
+                <View style={[styles.circle,{borderWidth:2,borderColor:props.borderColor}]}>
+                    <Image source={image.src}/>
                 </View>
             </View>
               <View style={styles.textBox}>

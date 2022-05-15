@@ -7,7 +7,7 @@ import icon from "../../assets/image/remainderIcon";
 const CircleProfilePickerRemainder = (props) => {
 
     const [icons,setIcons] = useState(icon);
-    const [selectedIcon,setSelectedIcon] = useState('');
+    const [selectedIcon,setSelectedIcon] = useState(props.icon);
     const [visible,setVisible] = useState(false)
     useEffect(()=>{
         props.setIcon(selectedIcon)
