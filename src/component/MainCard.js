@@ -50,14 +50,14 @@ const styles=StyleSheet.create({
     mainCardsTop:{
         flex:1,
         alignItems:"flex-start",
-        marginLeft:30,
-        marginTop:20
+        marginLeft:42,
+        marginTop:21
     },
     mainCardsTopText:{
         textAlign:"left",
         fontSize:30,
         color:'#FAF8F0',
-        fontFamily:'ShabnamMedium',
+        fontFamily:'Shabnam-Bold-FD',
     },
     mainCardsDown:{
         flex:1,
@@ -76,7 +76,7 @@ const styles=StyleSheet.create({
         fontSize:16,
         marginLeft:10,
         color:'#FAF8F0',
-        fontFamily:'Shabnam',
+        fontFamily:'Shabnam-FD',
     },
     circle:{
         borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,

@@ -6,6 +6,8 @@ import Remainder from "../../component/Remainder";
 import {AuthContext} from "../../../Context/auth";
 import axios from "axios";
 import { useNavigation } from '@react-navigation/native';
+import {API} from "../../../config";
+import reminder from "./Reminder";
 
 
 
@@ -14,8 +16,9 @@ const Home = (props) => {
     const [invoiceName,setInvoiceName] = useState("");
     const [invoiceColor,setInvoiceColor] = useState("");
     const [invoiceBalance,setInvoiceBalance] = useState("");
+    const [remainders,setRemainders] = useState([]);
     const navigation = useNavigation();
-    const loadFromApi= async(token,id)=> {
+    const loadInvoiceFromApi= async(token,id)=> {
         let config = {
             headers: {
                 Authorization: 'Bearer ' + token
@@ -23,7 +26,11 @@ const Home = (props) => {
         }
         const URL = `/invoices`;
         try {
-            const {data} = await axios.get(URL, config);
+            console.log(URL)
+            console.log(config)
+            const {data} = await axios.get(URL, config) .catch(error => {
+                console.log(error)
+            })
             if(data.data.length){
                 if (state.defaultInvoiceId===0) {
                     setInvoiceName(data.data[0].name)
@@ -43,8 +50,27 @@ const Home = (props) => {
             console.log(e.response)
         }
     }
+    const loadRemainderFromApi= async(token,id)=> {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }
+        const URL = `/invoices/${id}/reminders/`;
+        try {
+            const {data} = await axios.get(URL, config).then((response)=>{setRemainders(response.data.data)}).catch(error => {
+                console.log(error)
+            })
+            console.log(data)
+            }
+        catch (e) {
+            console.log(e.response)
+        }
+    }
+
     useEffect(()=>{
-        loadFromApi(state.data.access,state.defaultInvoiceId)
+        loadInvoiceFromApi(state.data.access,state.defaultInvoiceId)
+        loadRemainderFromApi(state.data.access,state.defaultInvoiceId)
     },[props.route])
     return(
       <View style={styles.container}
@@ -80,76 +106,17 @@ const Home = (props) => {
             <ScrollView
                 showsVerticalScrollIndicator={false}
             >
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#84C4FF'
-                    }}
-                    onPress={()=>{navigation.navigate('RemainderDetail')}}
-
-                />
-                <Remainder
-                    title={'خرید عید'}
-                    date={'تا 1/1/1401'}
-                    percent={75}
-                    circleStyle={{
-                        backgroundColor:'#F3BB2C'
-                    }}
-                    onPress={()=>{navigation.navigate('RemainderDetail')}}
-
-                />
-                <Remainder
-                    title={'کتاب'}
-                    date={'تا 1/1/1401'}
-                    percent={21}
-                    circleStyle={{
-                        backgroundColor:'#FE54B0'
-                    }}
-                    onPress={()=>{navigation.navigate('RemainderDetail')}}
-
-                />
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#84C4FF'
-                    }}
-                />
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#84C4FF'
-                    }}
-                />
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#84C4FF'
-                    }}
-                />
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#84C4FF'
-                    }}
-                />
-                <Remainder
-                    title={'سفر بوشهر'}
-                    date={'تا فردا'}
-                    percent={60}
-                    circleStyle={{
-                        backgroundColor:'#F3BB2C'
-                    }}
-                />
+                {
+                    remainders?.map((remainder)=>{
+                           return(
+                              <Remainder
+                                  title={remainder.name}
+                                  date={remainder.due_date}
+                                  percent={21}
+                              />
+                           )
+                    })
+                }
             </ScrollView>
               </View>
           </View>

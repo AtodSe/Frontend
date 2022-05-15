@@ -59,7 +59,7 @@ const Verification = (props) => {
                    }
 
                }catch (e){
-                   console.log(e.response)
+                   console.log("inja : ",e)
                    setAlert(e.message)
                }
        }

@@ -1,1 +1,1 @@
-export const API = 'http://10.0.2.2:8000/api';
+export const API = 'https://mighty-jeans-live-80-82-68-20.loca.lt/api';

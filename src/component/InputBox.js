@@ -4,11 +4,11 @@ import {Text, TextInput, View ,StyleSheet} from "react-native";
 
 const InputBox = (props) => {
   return(
-      <View>
+      <View style={[{},props.bodyStyle]}>
           <View style={styles.numberInputBox}>
-              <View style={styles.inputBox}>
+              <View style={[styles.inputBox,props.inputBoxStyle]}>
                   <TextInput
-                      style={styles.input}
+                      style={[styles.input,props.inputStyle]}
                       placeholder={props.placeholder}
                       {...props}
                   />
@@ -30,7 +30,7 @@ const styles=StyleSheet.create({
         textAlignVertical: 'bottom',
         textAlign:"right",
         fontSize:18,
-        fontFamily:'Shabnam',
+        fontFamily:'Shabnam-FD',
         letterSpacing: 1
     },
     inputBox:{

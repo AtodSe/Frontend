@@ -22,7 +22,7 @@ const TreansactionCard = (props) => {
             <View style={styles.balanceTextBox}>
                 {props.deposit?
                     <>
-                        <Text style={[styles.balanceText,{ color:'#09B785'}]}>+</Text>
+                        <Text style={[styles.balanceText,{ color:'#09B785' }]}>+</Text>
                         <ReactNativeNumberFormat  textStyle={[styles.balanceText,{ color:'#09B785'}]} value={props.balance} />
                     </>
                     :

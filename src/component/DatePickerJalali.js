@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, Text, Pressable, View ,TouchableWithoutFeedback} from "react-native";
 import DatePicker from '@mohamadkh75/react-native-jalali-datepicker';
+import toPersianNum from "../screen/test";
 
 const DatePickerJalali = (props) => {
   return(
@@ -116,7 +117,11 @@ const DatePickerJalali = (props) => {
                               disabledTextColor='#BCBBBE'
                               onDateChange={date =>
                               {
-                                  console.warn(date)
+                                  console.log(date)
+                                  const myArray = date.split('/')
+                                  props.setYear(myArray[0])
+                                  props.setMonth(myArray[1])
+                                  props.setDay(myArray[2])
                                   props.setVisible(!props.visible)
                               }
                           }
