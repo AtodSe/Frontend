@@ -7,7 +7,7 @@ import Transaction from "./Main/Transaction";
 import {Image, StyleSheet} from 'react-native'
 import CreateInvoice from "./Invoice/CreateInvoice";
 import RemainderDetail from "./RemainderDetail";
-import Add from "./Main/Add";
+import Add from "./Main/add/Add";
 
 
 
@@ -23,7 +23,7 @@ const Main = () => {
                 showIcon: true,
                 tabBarStyle:{
                     position:'absolute',
-                    bottom:15,
+                    bottom:30,
                     left:20,
                     right:20,
                     elevation:0,

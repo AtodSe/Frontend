@@ -1,15 +1,16 @@
 import React from "react";
-import {View ,StyleSheet} from "react-native";
-
+import {View, StyleSheet, Image} from "react-native";
+import SvgUri from 'react-native-svg-uri';
 const Poster = (props) => {
   return(
       <View style={[styles.poster,props.style]}>
-
+            <Image source={props.image.src} style={{width:"100%",height:"100%"}}/>
       </View>
   )
 }
 const styles=StyleSheet.create({
     poster:{
+        overflow:"hidden",
         flex:1,
         height:100,
         width:225,

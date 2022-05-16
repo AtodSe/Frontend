@@ -6,8 +6,11 @@ import Remainder from "../../component/Remainder";
 import {AuthContext} from "../../../Context/auth";
 import axios from "axios";
 import { useNavigation } from '@react-navigation/native';
-import {API} from "../../../config";
+import persianDate from 'persian-date'
 import reminder from "./Reminder";
+import posters from "../../../assets/image/poster";
+import jalaali from "../../utils/pDate";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -26,13 +29,14 @@ const Home = (props) => {
         }
         const URL = `/invoices`;
         try {
-            console.log(URL)
-            console.log(config)
             const {data} = await axios.get(URL, config) .catch(error => {
                 console.log(error)
             })
             if(data.data.length){
                 if (state.defaultInvoiceId===0) {
+                    console.log('data.data[0].id:',data.data[0].id)
+                    await AsyncStorage.setItem("@defaultInvoiceId",JSON.stringify(data.data[0].id));
+                    setState({...state,defaultInvoiceId:data.data[0].id})
                     setInvoiceName(data.data[0].name)
                     setInvoiceColor(data.data[0].color)
                     setInvoiceBalance(data.data[0].balance)
@@ -50,7 +54,7 @@ const Home = (props) => {
             console.log(e.response)
         }
     }
-    const loadRemainderFromApi= async(token,id)=> {
+    const loadRemaindersFromApi= async(token,id)=> {
         let config = {
             headers: {
                 Authorization: 'Bearer ' + token
@@ -70,8 +74,10 @@ const Home = (props) => {
 
     useEffect(()=>{
         loadInvoiceFromApi(state.data.access,state.defaultInvoiceId)
-        loadRemainderFromApi(state.data.access,state.defaultInvoiceId)
-    },[props.route])
+        if(state.defaultInvoiceId!==0) {
+            loadRemaindersFromApi(state.data.access, state.defaultInvoiceId)
+        }
+    },[props.route,state.defaultInvoiceId])
     return(
       <View style={styles.container}
       >
@@ -88,9 +94,18 @@ const Home = (props) => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
             >
-               <Poster style={{backgroundColor:"#FFAA46"}}/>
-               <Poster style={{backgroundColor:"#64C7FF"}}/>
-               <Poster style={{backgroundColor:"#FF7171"}}/>
+               <Poster
+                   style={{backgroundColor:"#FFAA46"}}
+                   image={posters[0]}
+               />
+               <Poster
+                   style={{backgroundColor:"#64C7FF"}}
+                   image={posters[1]}
+               />
+               <Poster
+                   style={{backgroundColor:"#FF7171"}}
+                   image={posters[2]}
+               />
             </ScrollView>
           </View>
           <View style={styles.cards}>
@@ -102,19 +117,29 @@ const Home = (props) => {
                     ریمایندر ها
                 </Text>
             </View>
-              <View style={{height:'64%' , paddingBottom:30 }}>
+              <View style={{height: '100%'}}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    justifyContent: 'space-evenly',
+                    paddingBottom: 550
+                }}
             >
                 {
                     remainders?.map((remainder)=>{
+                        let date = remainder.due_date.split('-')
+                        const rawDate = jalaali.getGregorian({year:parseInt(date[0]), month:parseInt(date[1]), date:parseInt(date[2])})
+                        let day = rawDate.gregorian
+                        const jalali = jalaali.getJalali(new Date(parseInt(date[0]),parseInt(date[1])-1,parseInt(date[2])))
+                        const x = jalaali.formatJalaali(jalali)
                            return(
                               <Remainder key={remainder.id}
                                   title={remainder.name}
-                                  date={remainder.due_date}
+                                  date={x}
                                   iconid={remainder.icon}
                                   percent={21}
                                   borderColor={remainder.color}
+                                  onPress={()=>{ navigation.navigate('RemainderDetail',{id:remainder.id})}}
                               />
                            )
                     })

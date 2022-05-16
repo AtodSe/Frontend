@@ -1,13 +1,39 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, Text, StyleSheet, TextInput, ScrollView, Dimensions, TouchableOpacity} from 'react-native'
 import CircleIcon from "../component/CircleIcon";
 import BalanceProgressBar from "../component/BalanceProgressBar";
 import DateProgressBar from "../component/DateProgressBar";
 import TransactionCard from "../component/TransactionCard";
 import DatePickerJalali from "../component/DatePickerJalali";
+import axios from "axios";
+import {AuthContext} from "../../Context/auth";
 
-const RemainderDetail = () => {
+const RemainderDetail = (props) => {
     const [showDatePicker,setShowDatePicker] = useState(false)
+    const [state,setState] = useContext(AuthContext);
+    const loadRemainderFromApi= async(token, invoiceId,remainderId)=> {
+        let config = {
+            headers: {
+                Authorization: 'Bearer ' + token
+            }
+        }
+        console.log(token, invoiceId,remainderId)
+        const URL = `/invoices/${invoiceId}/reminders/${remainderId}`;
+        try {
+            const {data} = await axios.get(URL, config).then((response)=>{
+                console.log(response.data.data)
+            }).catch(error => {
+                console.log(error)
+            })
+            console.log(data)
+        }
+        catch (e) {
+            console.log(e.response)
+        }
+    }
+    useEffect(()=>{
+        loadRemainderFromApi(state.data.access, state.defaultInvoiceId,props.route.params.id)
+    },[props.route])
   return(
       <View style={styles.body}>
           <View style={styles.container}>

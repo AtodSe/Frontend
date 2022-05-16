@@ -29,7 +29,6 @@ const Remainder = (props) => {
                       color="#5724AB"
                       shadowColor="#E9DBFF"
                       bgColor={'#FAF8F0'}
-
                   >
                       <Text style={styles.percentText}>{`${props.percent}%`}</Text>
                   </ProgressCircle>
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
         fontSize:16,
         marginLeft:10,
         color:'#8A7F9D',
-        fontFamily:'Shabnam',
+        fontFamily:'Shabnam-FD',
     },
     progressBox:{
         flex:1,

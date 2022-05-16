@@ -9,12 +9,9 @@ const CircleProfilePickerRemainder = (props) => {
     const [icons,setIcons] = useState(icon);
     const [selectedIcon,setSelectedIcon] = useState(props.icon);
     const [visible,setVisible] = useState(false)
-    useEffect(()=>{
-        props.setIcon(selectedIcon)
-    },[selectedIcon])
   return(
-          <View style={[styles.circle,{borderColor:selectedIcon===''?'#5724AB':selectedIcon.border}]} >
-              <View style = {[styles.circleIn,{ backgroundColor:selectedIcon===''?'#E9DBFF':'#fff'}]}>
+          <View style={[styles.circle,{borderColor:props.icon===''?'#5724AB':props.icon.border}]} >
+              <View style = {[styles.circleIn,{ backgroundColor:props.icon===''?'#E9DBFF':'#fff'}]}>
                   <TouchableOpacity
                       style={styles.circleIn}
                       onPress={()=> {
@@ -22,10 +19,10 @@ const CircleProfilePickerRemainder = (props) => {
                       }
                       }
                   >
-                    <IconPicker setVisible={setVisible} visible={visible} icons={icons} setSelectedIcon={setSelectedIcon}/>
+                    <IconPicker setVisible={setVisible} visible={visible} icons={icons} setSelectedIcon={props.setIcon}/>
                       {
-                          selectedIcon!==''?
-                              <Image source={selectedIcon.src} style={{ width: '60%', height: '60%',resizeMode: 'stretch',marginBottom:20}}/>
+                          props.icon!==''?
+                              <Image source={props.icon.src} style={{ width: '60%', height: '60%',resizeMode: 'stretch',marginBottom:20}}/>
                           :
                               null
                       }

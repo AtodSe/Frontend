@@ -60,7 +60,10 @@ const Loader = (props) => {
                 setError(false)
                 setText('به باهو خوش آمدید')
             }
-            props.navigation.navigate('RootMain')
+            setTimeout(() => {
+                props.navigation.navigate('RootMain')
+            }, 500)
+
         }
     },[load])
   return(
